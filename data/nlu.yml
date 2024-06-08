@@ -1,0 +1,101 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - good morning
+      - good evening
+      - good afternoon
+
+  - intent: goodbye
+    examples: |
+      - good bye
+      - good night
+      - bye
+      - goodbye
+      - bye bye
+      - see you later
+
+  - intent: ask_announcements
+    examples: |
+      - what are the latest announcements?
+      - any new announcements?
+      - can you tell me about the recent announcements?
+      - what's happening with announcements?
+      - tell me the latest announcements
+      - what's new in announcements?
+      - any updates on announcements?
+      - do you have any news on announcements?
+
+  - intent: ask_release_notes
+    examples: |
+      - what are the latest release notes?
+      - any recent updates?
+      - can you provide the release notes?
+      - what's new in the latest release?
+      - show me the release notes
+      - latest updates please
+      - what changes have been made recently?
+      - any modifications in the latest version?
+
+  - intent: ask_support
+    examples: |
+      - i need help with something
+      - can you assist me with a problem?
+      - where can I find support?
+      - I need assistance
+      - help me with an issue
+      - having trouble, can you help?
+
+  - intent: ask_feature_requests
+    examples: |
+      - are there any recent feature requests?
+      - what's new in feature requests?
+      - show me feature_requests
+
+  - intent: ask_submit_request
+    examples: |
+      - how can I request a new feature?
+      - can I submit a feature request?
+      - I have a feature suggestion
+      - how to request a feature
+      - any way to propose new features?
+      - can I give feedback on features?
+      - want to suggest an enhancement
+      - how can I ask for support? 
+      - how do I get support?
+      - where can I get help?
+      - need assistance with a technical issue
+
+  - intent: affirm
+    examples: |
+      - yes
+      - indeed
+      - of course
+      - that sounds good
+      - correct
+      - absolutely
+      - sure thing
+
+  - intent: deny
+    examples: |
+      - no
+      - never
+      - i don't think so
+      - i don't like that
+      - not really
+      - not at all
+      - definitely not
+
+  - intent: bot_challenge
+    examples: |
+      - are you a bot?
+      - are you a human?
+      - am I talking to a bot?
+      - am I talking to a human?
+      - are you real?
+      - is this a bot?
+      - can you prove you're not a bot?

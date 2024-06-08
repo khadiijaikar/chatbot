@@ -1,0 +1,72 @@
+version: "3.1"
+
+stories:
+  - story: User asks for announcements
+    steps:
+      - intent: ask_announcements
+      - action: action_search_question
+
+  - story: User asks for announcements differently
+    steps:
+      - intent: ask_announcements
+      - action: action_search_question
+
+  - story: User asks for release notes
+    steps:
+      - intent: ask_release_notes
+      - action: action_search_question
+
+  - story: User asks for release notes differently
+    steps:
+      - intent: ask_release_notes
+      - action: action_search_question
+
+  - story: User asks for support
+    steps:
+      - intent: ask_support
+      - action: action_search_question
+
+  - story: User asks for support differently
+    steps:
+      - intent: ask_support
+      - action: action_search_question
+
+  - story: User asks about feature requests
+    steps:
+      - intent: ask_feature_requests
+      - action: action_search_question
+
+  - story: User asks about feature requests differently
+    steps:
+      - intent: ask_feature_requests
+      - action: action_search_question
+
+  - story: Greet the bot
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - story: Say goodbye to the bot
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: User challenges the bot
+    steps:
+      - intent: bot_challenge
+      - action: utter_bot_challenge
+
+  - story: User affirms something
+    steps:
+      - intent: affirm
+      - action: utter_affirm
+
+  - story: User denies something
+    steps:
+      - intent: deny
+      - action: utter_deny
+
+  - story: User asks how to submit a request
+    steps:
+      - intent: ask_submit_request
+      - action: action_direct_form_links

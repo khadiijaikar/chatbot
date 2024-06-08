@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triggre Chatbot</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div id="chat-app">
+      <div id="chatbot-icon">
+        <img src="/images/chat.png" alt="Chatbot Icon" />
+      </div>
+      <div id="chatbot-popup">
+        <div id="chat-container">
+          <div id="chat-banner">
+            <span>Triggre Chatbot</span>
+            <div id="control-buttons">
+              <span id="close-button">x</span>
+            </div>
+          </div>
+          <div id="privacy-policy">
+            Triggre may process personal data collected in this chat or survey
+            to improve your experience. Please visit our
+            <a href="https://www.triggre.com/privacy-policy" target="_blank"
+              >Privacy Policy</a
+            >
+            for further information.
+          </div>
+          <div id="chat-date"></div>
+          <div id="chat-display"></div>
+          <div id="user-input-container">
+            <input
+              type="text"
+              id="user-input"
+              placeholder="Type your message..."
+            />
+            <button id="send-button"><i class="fas fa-arrow-up"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/static/script.js"></script>
+  </body>
+</html>

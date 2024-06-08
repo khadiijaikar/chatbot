@@ -1,0 +1,48 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - ask_announcements
+  - ask_release_notes
+  - ask_support
+  - ask_feature_requests
+  - affirm
+  - deny
+  - bot_challenge
+  - ask_submit_request
+
+responses:
+  utter_greet:
+    - text: "Hello! How can I assist you today?"
+
+  utter_goodbye:
+    - text: "Goodbye! If you have more questions, feel free to ask."
+
+  utter_ask_announcements:
+    - text: "Here are the latest announcements I found for you."
+
+  utter_ask_release_notes:
+    - text: "Here are the latest release notes I found for you."
+
+  utter_ask_support:
+    - text: "How can I assist you? Please describe your issue."
+
+  utter_ask_feature_requests:
+    - text: "You can submit feature requests. Here are some related topics."
+
+  utter_affirm:
+    - text: "Great!"
+
+  utter_deny:
+    - text: "Okay, no problem."
+
+  utter_bot_challenge:
+    - text: "I am a bot, here to help you with your queries."
+
+  utter_iamabot:
+    - text: "I am a bot, here to assist you with your queries."
+
+actions:
+  - action_search_question
+  - action_direct_form_links

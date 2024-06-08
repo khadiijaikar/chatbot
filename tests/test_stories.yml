@@ -1,0 +1,114 @@
+version: "3.1"
+
+stories:
+  - story: User asks for announcements
+    steps:
+      - user: |
+          What are the latest announcements?
+        intent: ask_announcements
+      - action: action_search_question
+
+  - story: User asks for announcements differently
+    steps:
+      - user: |
+          Any new announcements?
+        intent: ask_announcements
+      - action: action_search_question
+
+  - story: User asks for announcements in another way
+    steps:
+      - user: |
+          Can you tell me about the recent announcements?
+        intent: ask_announcements
+      - action: action_search_question
+
+  - story: User asks about announcements differently
+    steps:
+      - user: |
+          What's happening with announcements?
+        intent: ask_announcements
+      - action: action_search_question
+
+  - story: User asks for release notes
+    steps:
+      - user: |
+          What are the latest release notes?
+        intent: ask_release_notes
+      - action: action_search_question
+
+  - story: User asks for release notes in a different way
+    steps:
+      - user: |
+          Any recent updates?
+        intent: ask_release_notes
+      - action: action_search_question
+
+  - story: User requests release notes
+    steps:
+      - user: |
+          Can you provide the release notes?
+        intent: ask_release_notes
+      - action: action_search_question
+
+  - story: User inquires about release notes differently
+    steps:
+      - user: |
+          What's new in the latest release?
+        intent: ask_release_notes
+      - action: action_search_question
+
+  - story: User asks for support
+    steps:
+      - user: |
+          I need help with something.
+        intent: ask_support
+      - action: action_search_question
+
+  - story: User asks about how to get support
+    steps:
+      - user: |
+          How do I get support?
+        intent: ask_support
+      - action: action_search_question
+
+  - story: User requests assistance
+    steps:
+      - user: |
+          Can you assist me with a problem?
+        intent: ask_support
+      - action: action_search_question
+
+  - story: User asks where to find support
+    steps:
+      - user: |
+          Where can I find support?
+        intent: ask_support
+      - action: action_search_question
+
+  - story: User asks about feature requests
+    steps:
+      - user: |
+          How can I request a new feature?
+        intent: ask_feature_requests
+      - action: action_search_question
+
+  - story: User asks about recent feature requests
+    steps:
+      - user: |
+          Are there any recent feature requests?
+        intent: ask_feature_requests
+      - action: action_search_question
+
+  - story: User inquires about submitting feature requests
+    steps:
+      - user: |
+          Can I submit a feature request?
+        intent: ask_feature_requests
+      - action: action_search_question
+
+  - story: User asks where to suggest new features
+    steps:
+      - user: |
+          Where do I go to suggest new features?
+        intent: ask_feature_requests
+      - action: action_search_question
