@@ -7,10 +7,10 @@ intents:
   - ask_release_notes
   - ask_support
   - ask_feature_requests
+  - ask_submit_request
   - affirm
   - deny
   - bot_challenge
-  - ask_submit_request
 
 responses:
   utter_greet:
@@ -20,7 +20,7 @@ responses:
     - text: "Goodbye! If you have more questions, feel free to ask."
 
   utter_ask_announcements:
-    - text: "Here are the latest announcements I found for you."
+    - text: "Here are the latest announcements I found for you. [{title}]({link})"
 
   utter_ask_release_notes:
     - text: "Here are the latest release notes I found for you."
@@ -32,7 +32,7 @@ responses:
     - text: "You can submit feature requests. Here are some related topics."
 
   utter_affirm:
-    - text: "Great!"
+    - text: "Great! What would you like to know?"
 
   utter_deny:
     - text: "Okay, no problem."
@@ -45,4 +45,4 @@ responses:
 
 actions:
   - action_search_question
-  - action_direct_form_links
+  - action_submit_request

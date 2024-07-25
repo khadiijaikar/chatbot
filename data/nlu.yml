@@ -54,7 +54,7 @@ nlu:
     examples: |
       - are there any recent feature requests?
       - what's new in feature requests?
-      - show me feature_requests
+      - show me feature requests
 
   - intent: ask_submit_request
     examples: |
@@ -69,6 +69,7 @@ nlu:
       - how do I get support?
       - where can I get help?
       - need assistance with a technical issue
+      - i have an issue
 
   - intent: affirm
     examples: |

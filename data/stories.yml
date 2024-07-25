@@ -41,6 +41,11 @@ stories:
       - intent: ask_feature_requests
       - action: action_search_question
 
+  - story: User asks to submit a request
+    steps:
+      - intent: ask_submit_request
+      - action: action_search_question
+
   - story: Greet the bot
     steps:
       - intent: greet
@@ -65,8 +70,3 @@ stories:
     steps:
       - intent: deny
       - action: utter_deny
-
-  - story: User asks how to submit a request
-    steps:
-      - intent: ask_submit_request
-      - action: action_direct_form_links

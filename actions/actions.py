@@ -1,28 +1,11 @@
-import json
-import random
 from typing import Any, Text, Dict, List
 from difflib import SequenceMatcher
-
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import EventType
-
-class ActionDirectFormLinks(Action):
-    def name(self) -> Text:
-        return "action_direct_form_links"
-
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> List[EventType]:
-        dispatcher.utter_message(
-            text="Sure! Here are the links where you can submit your requests:\n"
-            "- [Support Request Form](https://example.com/support)\n"
-            "- [Feature Requests Submission Form](https://example.com/feature-requests)\n"
-        )
-        return []
+import json
+import random
+import re
 
 class ActionSearchQuestion(Action):
     def name(self) -> Text:
@@ -31,60 +14,66 @@ class ActionSearchQuestion(Action):
     def similar(self, a, b):
         return SequenceMatcher(None, a, b).ratio()
 
+    def normalize(self, text):
+        return re.sub(r'\s+', ' ', re.sub(r'[^\w\s]', '', text.lower())).strip()
+
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[EventType]:
-        # Load the data from the JSON file
-        intent_name = tracker.latest_message['intent'].get('name')
-        file_path = ''
-        if intent_name == 'ask_announcements':
-            file_path = '/Users/kads/Downloads/announcements.json'
-        elif intent_name == 'ask_release_notes':
-            file_path = '/Users/kads/Downloads/release-notes.json'
-        elif intent_name == 'ask_support':
-            file_path = '/Users/kads/Downloads/support.json'
-        elif intent_name == 'ask_feature_requests':
-            file_path = '/Users/kads/Downloads/feature-requests.json'
-        
-        if file_path:
-            with open(file_path, 'r') as file:
-                data = json.load(file)
-        else:
-            dispatcher.utter_message(text="Sorry, I couldn't find relevant data for your request.")
+        support_file_path = '/Users/kads/Downloads/support.json'
+        announcements_file_path = '/Users/kads/Downloads/announcements.json'
+
+        try:
+            with open(support_file_path, 'r') as file:
+                support_data = json.load(file)
+        except FileNotFoundError:
+            dispatcher.utter_message(text="Sorry, I couldn't find the file containing the support data.")
             return []
 
-        # Get user input
-        user_input = tracker.latest_message['text']
+        try:
+            with open(announcements_file_path, 'r') as file:
+                announcements_data = json.load(file)
+        except FileNotFoundError:
+            dispatcher.utter_message(text="Sorry, I couldn't find the file containing the announcements.")
+            return []
 
-        # Search for the exact topic title mentioned in the user query
-        for item in data:
-            title = item.get('Topic Title', '')
-            if title.lower() in user_input.lower():
-                dispatcher.utter_message(text=f"Title: {title}\nDescription: {item.get('Topic Description', '')}")
-                return []
+        user_input = self.normalize(tracker.latest_message['text'])
 
-        # If no matching topic is found, search for similar topics
-        similar_topics = []
-        for item in data:
-            title = item.get('Topic Title', '')
-            similarity_score = self.similar(user_input.lower(), title.lower())
-            if similarity_score > 0.5: 
-                similar_topics.append(item)
+        # Check if the user is asking about announcements specifically
+        if 'announcement' in user_input:
+            self.handle_announcements(announcements_data, dispatcher)
+            return []
 
-        # If similar topics are found, send the relevant information to the user
-        if similar_topics:
-            dispatcher.utter_message(text="Here are some similar topics:")
-            for topic in similar_topics:
-                dispatcher.utter_message(text=f"Title: {topic.get('Topic Title', '')}\nDescription: {topic.get('Topic Description', '')}")
+        matched_topics = []
+
+        for item in support_data:
+            title = self.normalize(item.get('Topic Title', ''))
+            similarity_score = self.similar(user_input, title)
+            if similarity_score > 0.4:  # Adjusted similarity threshold
+                matched_topics.append(item)
+
+        if matched_topics:
+            dispatcher.utter_message(text="Here are some matching topics:")
+            for topic in matched_topics:
+                title = topic.get('Topic Title', '')
+                topic_url = topic.get('Topic URL', '#')
+                dispatcher.utter_message(text=f"Title: {title}\nTopic URL: {topic_url}")
+
+                if 'solution' in user_input:
+                    solution = topic.get('Solution', 'No solution provided.')
+                    dispatcher.utter_message(text=f"Solution: {solution}")
         else:
-            # Return message based on the user's input
-            if intent_name == 'ask_announcements':
-                dispatcher.utter_message(text=random.choice(["Hmm, I couldn't find any announcements matching that. Would you like to try a different query?", "Seems like there are no announcements related to that. What else can I assist you with?"]))
-            elif intent_name == 'ask_release_notes':
-                dispatcher.utter_message(text=random.choice(["I couldn't find any release notes on that. Want to ask about something else?", "Sorry, no release notes were found for your query. How else can I help?"]))
-            elif intent_name == 'ask_support':
-                dispatcher.utter_message(text=random.choice(["There are no support topics matching your query. Is there anything else you need assistance with?", "Sorry, I couldn't find any support topics related to that. What else can I assist you with?"]))
-            elif intent_name == 'ask_feature_requests':
-                dispatcher.utter_message(text=random.choice(["I couldn't find any feature requests related to your query. Would you like to ask about something else?", "No feature requests were found matching that query. What else can I assist you with?"]))
-            else:
-                dispatcher.utter_message(text="Sorry, I couldn't find relevant information for your request.")
-                return []
-            
+            dispatcher.utter_message(text=random.choice([
+                "Hmm, I couldn't find any information matching that. Would you like to try a different query?",
+                "No relevant information found. What else can I assist you with?"
+            ]))
+
+        return []
+
+    def handle_announcements(self, announcements_data, dispatcher):
+        if announcements_data:
+            dispatcher.utter_message(text="Here are the latest announcements:")
+            for idx, announcement in enumerate(announcements_data[:2], start=1):
+                title = announcement.get('Topic Title', '')
+                link = announcement.get('Topic Link', '#')
+                dispatcher.utter_message(text=f"{idx}. Title: {title}\nLink: {link}")
+        else:
+            dispatcher.utter_message(text="No announcements found.")
